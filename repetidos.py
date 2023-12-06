@@ -1,16 +1,13 @@
 import sys
+import argparse
 
-# Verificar si hay argumentos en la línea de comandos
-if len(sys.argv) > 1:
-    # Si hay argumentos, intentar convertir el primer argumento a un número
-    try:
-        num_pal = int(sys.argv[1])
-    except ValueError:
-        print("El argumento debe ser un número. Se utilizará el valor por defecto (40).")
-        num_pal = 40
-else:
-    # Si no hay argumentos, establecer el valor por defecto (40)
-    num_pal = 40
+parser = argparse.ArgumentParser(description='Encuentra bloques de texto duplicados en un archivo.')
+parser.add_argument('--num_pal', type=int, default=40, help='Número de palabras por bloque')
+parser.add_argument('--archivo', type=str, required=True, help='Ruta al archivo de entrada')
+args = parser.parse_args()
+
+num_pal = args.num_pal
+archivo_path = args.archivo
 
 def encontrar_duplicados(texto):
     # Dividir el texto en bloques de 6 palabras
@@ -40,7 +37,7 @@ def encontrar_duplicados(texto):
     return bloques_duplicados
 
 # Leer el contenido del archivo
-with open('archivo.txt', 'r', encoding='utf-8') as archivo:
+with open(archivo_path, 'r', encoding='utf-8') as archivo:
     contenido = archivo.read()
 
 # Encontrar duplicados en el texto
